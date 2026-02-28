@@ -28,7 +28,7 @@ fun reverseList(head: ListNode?): ListNode? {
     return prev
 }
 
-fun findMiddle(head: ListNode): ListNode? {
+fun findMiddle(head: ListNode?): ListNode? {
 
     var fast: ListNode? = head
     var slow: ListNode? = head
@@ -53,16 +53,61 @@ fun hasCycle(head: ListNode?): Boolean {
 }
 
 fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
-    var fast: ListNode? = head
-    var slow: ListNode? = head
+    val dummy = ListNode("0").apply {
+        next = head
+    }
+    var fast: ListNode? = dummy
+    var slow: ListNode? = dummy
 
-    repeat ( n) {
+    repeat ( n + 1) {
         fast = fast?.next
     }
 
     while (fast != null && fast.next != null) {
         slow = slow?.next
+        fast = fast.next
     }
+    slow?.next = slow.next?.next
+
+    return dummy.next
+}
+
+fun mergeTwoLists(l1: ListNode?, l2: ListNode?): ListNode? {
+    val dummy = ListNode("")
+    var current: ListNode? = dummy
+    var ptr1 = l1
+    var ptr2 = l2
+
+    while (ptr1 != null && ptr2 != null) {
+        if (ptr1.value <= ptr2.value) {
+            current?.next = ptr1
+            ptr1 = ptr1.next
+        } else {
+            current?.next = ptr2
+            ptr2 = ptr2.next
+        }
+        current = current?.next
+    }
+
+    current?.next = ptr1 ?: ptr2
+
+    return dummy.next
+}
+
+fun isPalindrome(head: ListNode?): Boolean {
+    val middle = findMiddle(head)
+    val revListHead = middle?.next
+    var current = head
+    var revList = reverseList(revListHead)
+    while (revList?.next != null) {
+        if (current?.value == revList.value) {
+            current = current.next
+            revList = revList.next
+            continue
+        } else
+            return false
+    }
+    return true
 }
 
 fun main() {
