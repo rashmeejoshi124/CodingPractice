@@ -16,6 +16,19 @@ fun maxSubArraySum(nums: IntArray): Int {
     return maxSum
 }
 
+fun checkPrime() {
+    val no = 50
+
+    when(no) {
+        0 -> println(false)
+        2,3 -> println(true)
+        
+    }
+    if (no < 0)
+        println("false")
+
+}
+
 fun maxSubArray(nums: IntArray): List<Int> {
     var currentSum = nums[0]
     var maxSum = nums[0]
